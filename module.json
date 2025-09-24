@@ -1,0 +1,21 @@
+{
+  "id": "militia",
+  "title": "Militia",
+  "description": "Automates tokens fighting.",
+  "version": "0.0.1",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12"
+  },
+  "authors": [
+    {
+      "name": "Green",
+      "discord": "greenmaan"
+    }
+  ],
+  "esmodules": ["scripts/main.js"],
+
+  "manifest": "https://raw.githubusercontent.com/nolan/Militia Module/main/module.json",
+  "download": "https://github.com/nolan/Militia Module/archive/refs/heads/main.zip",
+  "readme": "https://github.com/nolan/Militia Module#readme"
+}
