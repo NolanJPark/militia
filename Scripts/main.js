@@ -1,6 +1,6 @@
 // main.js
 Hooks.once("init", () => {
-  console.log("Minimax Module | Initializing");
+  console.log("Militia Module | Initializing");
 });
 
 Hooks.on("getSceneControlButtons", (controls) => {
@@ -8,7 +8,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
     name: "militia-tools",
     title: "Militia Tools",
     icon: "fas fa-chess",
-    layer: "none", // dummy layer, prevents Foundry from switching tools
+    layer: "controls",
     tools: [
       {
         name: "friendly",
@@ -18,8 +18,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
           const module = await import("./friendly.js");
           module.buildFriendlyGrid();
         },
-        button: true,
-        toggle: false // prevent Foundry from trying to toggle layers
+        button: true
       },
       {
         name: "hostile",
@@ -29,8 +28,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
           const module = await import("./hostile.js");
           module.buildHostileGrid();
         },
-        button: true,
-        toggle: false
+        button: true
       }
     ]
   });
