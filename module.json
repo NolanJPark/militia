@@ -15,7 +15,7 @@
   ],
   "esmodules": ["scripts/main.js"],
 
-  "manifest": "https://raw.githubusercontent.com/nolan/Militia Module/main/module.json",
-  "download": "https://github.com/nolan/Militia Module/archive/refs/heads/main.zip",
-  "readme": "https://github.com/nolan/Militia Module#readme"
+  "manifest": "https://raw.githubusercontent.com/nolan/militia/main/module.json",
+  "download": "https://github.com/nolan/militia/archive/refs/heads/main.zip",
+  "readme": "https://github.com/nolan/militia#readme"
 }
