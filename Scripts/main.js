@@ -1,33 +1,25 @@
-// main.js - entry point of your Foundry module
-import { buildGrid } from "./grid.js"; // optional if you separate logic
+// main.js
+import { buildGrid } from "./grid.js";
 
-Hooks.once('init', function() {
+Hooks.once("init", () => {
   console.log("Minimax Module | Initializing");
-  // Could register settings here if needed
 });
 
-Hooks.once('ready', function() {
-  console.log("Minimax Module | Ready");
-
-  // Add sidebar button under a category
-  const categoryName = "Minimax Tools";
-
-  // Check if the category exists, else create it
-  let category = $(`.directory[data-tab="${categoryName}"]`);
-  if (!category.length) {
-    // Append category header
-    $('#controls').append(`<div class="directory" data-tab="${categoryName}"><h3>${categoryName}</h3></div>`);
-    category = $(`.directory[data-tab="${categoryName}"]`);
-  }
-
-  // Add the grid button
-  const buttonHtml = `
-    <a class="control-tool" title="Build Grid">
-      <i class="fas fa-th"></i> Grid
-    </a>
-  `;
-  const toolButton = $(buttonHtml).click(() => buildGrid());
-  category.append(toolButton);
-
-  console.log("Minimax Tools button added.");
+Hooks.on("getSceneControlButtons", (controls) => {
+  // Add a new control group for Minimax
+  controls.push({
+    name: "minimax",
+    title: "Minimax Tools",
+    icon: "fas fa-chess",
+    layer: "controls", // no custom canvas layer needed yet
+    tools: [
+      {
+        name: "buildGrid",
+        title: "Build Grid",
+        icon: "fas fa-th",
+        onClick: () => buildGrid(),
+        button: true
+      }
+    ]
+  });
 });
