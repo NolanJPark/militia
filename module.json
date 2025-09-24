@@ -13,7 +13,7 @@
       "discord": "greenmaan"
     }
   ],
-  "esmodules": ["scripts/main.js"],
+  "esmodules": ["Scripts/main.js"],
 
   "manifest": "https://raw.githubusercontent.com/NolanJPark/militia/main/module.json",
   "download": "https://github.com/NolanJPark/militia/releases/download/v0.0.1/militia.zip",
