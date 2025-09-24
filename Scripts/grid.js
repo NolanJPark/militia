@@ -8,28 +8,50 @@ export async function buildGrid() {
 
   let grid = Array.from({ length: h }, () => Array(w).fill(0));
 
-  // Iterate over TokenDocuments in the scene
   for (let token of scene.tokens) {
-    const x = Math.floor(token.x / scene.grid.size);
-    const y = Math.floor(token.y / scene.grid.size);
-
     if (!token.actor) continue;
-    const name = token.actor.name?.toLowerCase() ?? "";
-    const disposition = token.disposition;  // ✅ works on TokenDocument in v11
 
-    // Fill grid according to your rules
+    const name = token.actor.name?.toLowerCase() ?? "";
+    const disposition = token.disposition;
+    const isPlayer = token.actor.type === "character";
+
+    // figure out which grid squares it covers
+    const startX = Math.floor(token.x / scene.grid.size);
+    const startY = Math.floor(token.y / scene.grid.size);
+    const width = token.width;   // in grid units
+    const height = token.height; // in grid units
+
+    // Determine what value this token would write
+    let value = 0;
     if (token.flags?.hazard) {
-      grid[y][x] = 1; // hazard
-    } else if (token.actor.type === "character") {
-      grid[y][x] = 2; // player
+      value = 1;
+    } else if (isPlayer) {
+      value = 2;
     } else if (disposition === CONST.TOKEN_DISPOSITIONS.FRIENDLY && name.startsWith("militia")) {
-      grid[y][x] = 4; // friendly NPC militia
+      value = 4;
     } else if (disposition === CONST.TOKEN_DISPOSITIONS.FRIENDLY) {
-      grid[y][x] = 3; // friendly NPC
+      value = 3;
     } else if (disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE && name.startsWith("militia")) {
-      grid[y][x] = 6; // enemy NPC militia
+      value = 6;
     } else if (disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE) {
-      grid[y][x] = 5; // enemy NPC
+      value = 5;
+    }
+
+    // Fill all grid squares this token occupies
+    for (let dy = 0; dy < height; dy++) {
+      for (let dx = 0; dx < width; dx++) {
+        const gx = startX + dx;
+        const gy = startY + dy;
+        if (gx < 0 || gy < 0 || gx >= w || gy >= h) continue;
+
+        // Special case: players override everything else
+        if (grid[gy][gx] === 2 && !isPlayer) continue;
+        if (isPlayer) {
+          grid[gy][gx] = 2;
+        } else {
+          grid[gy][gx] = value;
+        }
+      }
     }
   }
 
