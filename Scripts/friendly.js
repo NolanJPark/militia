@@ -28,7 +28,7 @@ const DIRECTIONS = [
 // --- Move generation (for friendly militia only) ---
 function generateMoves(grid, isFriendly) {
   const moves = [];
-  const targetValues = isFriendly ? [4] : [5, 6]; // who moves this turn
+  const targetValues = isFriendly ? [4] : [5, 6];
   const h = grid.length;
   const w = grid[0].length;
 
@@ -36,22 +36,22 @@ function generateMoves(grid, isFriendly) {
     for (let x = 0; x < w; x++) {
       if (!targetValues.includes(grid[y][x])) continue;
 
-      // BFS to find reachable cells up to 6 steps
       let queue = [{ x, y, dist: 0 }];
       let visited = new Set([`${x},${y}`]);
 
       while (queue.length > 0) {
         const { x: cx, y: cy, dist } = queue.shift();
+
         if (dist > 0 && grid[cy][cx] === 0) {
           moves.push({ from: { x, y }, to: { x: cx, y: cy } });
         }
 
-        if (dist < 6) {
+        if (dist < 2) { // keep small radius while testing
           for (let [dx, dy] of DIRECTIONS) {
             const nx = cx + dx, ny = cy + dy;
             if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
             if (visited.has(`${nx},${ny}`)) continue;
-            if (grid[ny][nx] !== 0) continue; // cannot move *through* occupied cells
+            if (grid[ny][nx] !== 0 && !(nx === x && ny === y)) continue; 
             visited.add(`${nx},${ny}`);
             queue.push({ x: nx, y: ny, dist: dist + 1 });
           }
