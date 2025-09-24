@@ -4,12 +4,11 @@ Hooks.once("init", () => {
 });
 
 Hooks.on("getSceneControlButtons", (controls) => {
-  // Add Militia Tools group to the left toolbar
   controls.push({
     name: "militia-tools",
     title: "Militia Tools",
     icon: "fas fa-chess",
-    layer: "tokens", // uses the token layer
+    layer: "none", // dummy layer, prevents Foundry from switching tools
     tools: [
       {
         name: "friendly",
@@ -19,7 +18,8 @@ Hooks.on("getSceneControlButtons", (controls) => {
           const module = await import("./friendly.js");
           module.buildFriendlyGrid();
         },
-        button: true
+        button: true,
+        toggle: false // prevent Foundry from trying to toggle layers
       },
       {
         name: "hostile",
@@ -29,7 +29,8 @@ Hooks.on("getSceneControlButtons", (controls) => {
           const module = await import("./hostile.js");
           module.buildHostileGrid();
         },
-        button: true
+        button: true,
+        toggle: false
       }
     ]
   });
