@@ -1,23 +1,34 @@
 // main.js
-import { buildGrid } from "./grid.js";
-
 Hooks.once("init", () => {
   console.log("Minimax Module | Initializing");
 });
 
 Hooks.on("getSceneControlButtons", (controls) => {
-  // Add a new control group for Minimax
+  // Add Militia Tools group to the left toolbar
   controls.push({
-    name: "minimax",
-    title: "Minimax Tools",
+    name: "militia-tools",
+    title: "Militia Tools",
     icon: "fas fa-chess",
-    layer: "controls", // no custom canvas layer needed yet
+    layer: "tokens", // uses the token layer
     tools: [
       {
-        name: "buildGrid",
-        title: "Build Grid",
-        icon: "fas fa-th",
-        onClick: () => buildGrid(),
+        name: "friendly",
+        title: "Friendly Move",
+        icon: "fas fa-shield-alt",
+        onClick: async () => {
+          const module = await import("./friendly.js");
+          module.buildFriendlyGrid();
+        },
+        button: true
+      },
+      {
+        name: "hostile",
+        title: "Hostile Move",
+        icon: "fas fa-skull-crossbones",
+        onClick: async () => {
+          const module = await import("./hostile.js");
+          module.buildHostileGrid();
+        },
         button: true
       }
     ]
