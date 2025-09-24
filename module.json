@@ -16,6 +16,6 @@
   "esmodules": ["scripts/main.js"],
 
   "manifest": "https://raw.githubusercontent.com/NolanJPark/militia/main/module.json",
-  "download": "https://github.com/NolanJPark/militia/archive/refs/heads/main.zip",
+  "download": "https://github.com/NolanJPark/militia/releases/download/v0.0.1/militia.zip",
   "readme": "https://github.com/NolanJPark/militia#readme"
 }
